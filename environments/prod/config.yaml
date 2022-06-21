@@ -1,0 +1,9 @@
+egion: "us-east-1"
+
+APP: terraform-config-demo
+CLUSTER: terraform-config-demo
+
+SERVICES: {}
+
+tags:
+  Managed by: terraform
