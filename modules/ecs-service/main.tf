@@ -10,6 +10,9 @@ locals {
 
 resource "aws_ecs_service" "service" {
   enable_ecs_managed_tags = var.enable_ecs_managed_tags
+  network_configuration  {
+    subnets = var.subnets
+  }
   task_definition         = var.task_definition
   desired_count           = var.desired_count
   launch_type             = var.launch_type

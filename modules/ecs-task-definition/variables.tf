@@ -28,13 +28,13 @@ variable "task_role_arn" {
 
 variable "requires_compatibilities" {
   description = "Set of launch types required by the task. The valid values are EC2 and FARGATE"
-  default     = ["EC2"]
+  default     = ["FARGATE"]
   type        = list(string)
 }
 
 variable "network_mode" {
   description = "Docker networking mode to use for the containers in the task. Valid values are none, bridge, awsvpc, and host"
-  default     = "bridge"
+  default     = "awsvpc"
   type        = string
 }
 
@@ -86,13 +86,13 @@ variable "append_workspace_container" {
 
 variable "container_memory" {
   description = "The amount of memory (in MiB) to allow the container to use. This is a hard limit, if the container attempts to exceed the container_memory, the container is killed. This field is optional for Fargate launch type and the total amount of container_memory of all containers in a task will need to be lower than the task memory value"
-  default     = 256
+  default     = 512
   type        = number
 }
 
 variable "container_memory_reservation" {
   description = "The amount of memory (in MiB) to reserve for the container. If container needs to exceed this threshold, it can do so up to the set container_memory hard limit"
-  default     = 128
+  default     = 512
   type        = number
 }
 
@@ -110,7 +110,7 @@ variable "port_mappings" {
 
 variable "container_cpu" {
   description = "The number of cpu units to reserve for the container. This is optional for tasks using Fargate launch type and the total amount of container_cpu of all containers in a task will need to be lower than the task-level cpu value"
-  default     = 300
+  default     = 256
   type        = number
 }
 

@@ -19,6 +19,7 @@ module "ecs-service" {
   app             = local.config.APP
   task_definition = module.ecs_task_definition[each.key].output.task_definition.arn
   desired_count   = each.value.DESIRED_COUNT
+  subnets         = module.vpc.private_subnets
   tags            = local.config.tags
 }
 
@@ -29,9 +30,17 @@ module "ecs_task_definition" {
   container_memory_reservation = each.value.SOFT_LIMIT
   execution_role_arn           = each.value.IAM
   append_workspace             = false
-  container_memory             = each.value.RAM
+  task_memory                  = each.value.RAM
+  log_configuration = {
+    logDriver = "awslogs",
+    options   = {
+      awslogs-stream-prefix = "logs-"
+      awslogs-group         = aws_cloudwatch_log_group.log_group[each.key].name
+      awslogs-region        = local.config.region
+    }
+  }
   container_image              = "${module.ecr[each.key].output.repository_url}:latest"
-  container_cpu                = each.value.CPU
+  task_cpu                     = each.value.CPU
   docker_labels = {
     service = "${terraform.workspace}_${local.config.APP}_${each.key}"
   }
@@ -52,4 +61,10 @@ module "ecr" {
   append_workspace     = false
   app                  = "${terraform.workspace}_${local.config.APP}_${each.key}"
   tags                 = local.config.tags
+}
+
+resource "aws_cloudwatch_log_group" "log_group" {
+  for_each = local.config.SERVICES
+
+  name = "${terraform.workspace}_${local.config.APP}_${each.key}"
 }

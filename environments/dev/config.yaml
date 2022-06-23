@@ -1,10 +1,22 @@
 region: "us-east-1"
 
 APP: terraform-config-demo
-CLUSTER: terraform-config-demo
+CLUSTER: test
 
-SERVICES: {}
+SERVICES: 
+  test-service:
+    CPU: 256
+    RAM: 512
+    SOFT_LIMIT: 512
+    DESIRED_COUNT: 1
+    port_mappings: []
+    #ECS Task Execution Role - needs access to cloudwatch logs
+    IAM: 
+    COMMAND: []
+    ENV_VARS:
+      - name: environment
+        value: dev
 
 tags:
   Managed by: terraform
-
+  Envrionment: dev

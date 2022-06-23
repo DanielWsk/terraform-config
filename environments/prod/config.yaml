@@ -3,7 +3,20 @@ egion: "us-east-1"
 APP: terraform-config-demo
 CLUSTER: terraform-config-demo
 
-SERVICES: {}
-
+SERVICES: 
+  test-service:
+    CPU: 256
+    RAM: 512
+    SOFT_LIMIT: 512
+    DESIRED_COUNT: 1
+    port_mappings: []
+    #ECS Task Execution Role - needs access to cloudwatch logs
+    IAM: 
+    COMMAND: []
+    ENV_VARS:
+      - name: environment
+        value: prod
+      
 tags:
   Managed by: terraform
+  Envrionment: prod

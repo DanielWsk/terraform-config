@@ -11,7 +11,7 @@ resource "aws_subnet" "public" {
   cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 4, each.value)
 
   tags = {
-    Name      = "public-subet-${each.value}"
+    Name      = "public-subnet-${each.value}"
     ManagedBy = "terraform"
     Subnet    = "${each.key}-${each.value}"
   }
@@ -26,7 +26,7 @@ resource "aws_subnet" "private" {
   cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 4, each.value)
 
   tags = {
-    Name      = "private-subet-${each.value}"
+    Name      = "private-subnet-${each.value}"
     ManagedBy = "terraform"
     Subnet    = "${each.key}-${each.value}"
   }

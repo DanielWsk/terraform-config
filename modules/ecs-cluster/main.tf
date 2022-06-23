@@ -11,10 +11,6 @@ locals {
 resource "aws_ecs_cluster" "cluster" {
   name = local.app
 
-  setting {
-    value = var.container_insights
-    name  = "containerInsights"
-  }
   tags = var.tags
 }
 

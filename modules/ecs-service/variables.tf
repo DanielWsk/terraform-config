@@ -37,6 +37,12 @@ variable "launch_type" {
   type        = string
 }
 
+variable "subnets" {
+  description = "Subnets associated with the task or service"
+  default     = []
+  type        = list(string)
+}
+
 variable "tags" {
   description = "Tags to be applied to the resource"
   default     = {}
